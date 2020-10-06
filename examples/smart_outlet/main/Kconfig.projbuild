@@ -1,4 +1,4 @@
-menu "Example Configuration"
+menu "Wifi Configuration"
 
 config ESP_WIFI_SSID
     string "WiFi SSID"
@@ -11,11 +11,5 @@ config ESP_WIFI_PASSWORD
     default "mypassword"
     help
 	WiFi password (WPA or WPA2) for the example to use.
-
-config OUTPUT_GPIO
-    int "Output GPIO"
-    default 27
-    help
-    This is the GPIO on which output will be set.
 
 endmenu
