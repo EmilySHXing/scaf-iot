@@ -34,7 +34,7 @@ void main_task( void * pvParameters )
 {
     configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 600000 / portTICK_PERIOD_MS;
+    const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
     xLastWakeTime = xTaskGetTickCount();  
 
     for( ;; )
@@ -49,7 +49,7 @@ void main_task( void * pvParameters )
             scheduled_time.tm_year == timeinfo.tm_year &&
             scheduled_time.tm_year == timeinfo.tm_year)
         {
-            // motor stuff
+            rotate(portion);
         }
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -66,10 +66,11 @@ void app_main()
     }
     ESP_ERROR_CHECK(ret);
 
+    /* Initializations */
     misc_init();
-
-    /* Initialize iotc */
     iotc_init();
+    motor_init();
+    pir_init();
 
     /* Tasks */
     xTaskCreate(&mqtt_task, "mqtt_task", 8192, NULL, 5, NULL);

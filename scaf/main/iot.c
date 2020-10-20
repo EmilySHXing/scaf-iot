@@ -1,22 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/event_groups.h"
-#include "esp_system.h"
-#include "esp_wifi.h"
-#include "esp_event_loop.h"
-#include "esp_log.h"
-#include "nvs_flash.h"
-#include "jsmn.h"
-#include <time.h>
-#include "lwip/apps/sntp.h"
-#include "driver/gpio.h"
-
-#include "lwip/err.h"
-#include "lwip/sys.h"
-#include <iotc.h>
-#include <iotc_jwt.h>
 #include "iot.h"
 
 extern const uint8_t ec_pv_key_start[] asm("_binary_private_key_pem_start");
@@ -50,6 +31,7 @@ void obtain_time(void)
 {
     initialize_sntp();
     // wait for time to be set
+    // SET TIMEZONE
     time_t now = 0;
     struct tm timeinfo = {0};
     while (timeinfo.tm_year < (2016 - 1900)) {
@@ -75,7 +57,7 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     time(&now);
     localtime_r(&now, &timeinfo);
     char *publish_message = NULL;
-    asprintf(&publish_message, TEST_MSG);
+    asprintf(&publish_message, WEIGHT_MSG, weight, "");
     ESP_LOGI(TAG, "publishing msg \"%s\" to topic: \"%s\"\n", publish_message, publish_topic);
 
     iotc_publish(context_handle, publish_topic, publish_message,
@@ -128,9 +110,6 @@ void on_connection_state_changed(iotc_context_handle_t in_context_handle,
     case IOTC_CONNECTION_STATE_OPENED:
         printf("connected!\n");
 
-        /* Publish immediately upon connect. 'publish_function' is defined
-           in this example file and invokes the IoTC API to publish a
-           message. */
         asprintf(&subscribe_topic_command, SUBSCRIBE_TOPIC_COMMAND, CONFIG_GIOT_DEVICE_ID);
         printf("subscribe to topic: \"%s\"\n", subscribe_topic_command);
         iotc_subscribe(in_context_handle, subscribe_topic_command, IOTC_MQTT_QOS_AT_LEAST_ONCE,
