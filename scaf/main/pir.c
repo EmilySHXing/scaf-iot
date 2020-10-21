@@ -13,6 +13,7 @@ void pir_task( void * pvParameters )
     uint32_t io_num;
     for( ;; )
     {
+        ESP_LOGI("APP", "In PIR Task");
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
             publish_telemetry_event(iotc_context, 0, NULL);
         }
@@ -27,5 +28,6 @@ void pir_init()
     io_conf.pin_bit_mask = 1ULL<<PIR_READ_PIN;
     gpio_config(&io_conf);
 
+    gpio_install_isr_service(0);
     gpio_isr_handler_add(PIR_READ_PIN, gpio_isr_handler, (void*) PIR_READ_PIN);
 }

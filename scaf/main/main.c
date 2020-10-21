@@ -1,18 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/event_groups.h"
-#include "esp_system.h"
-#include "esp_wifi.h"
-#include "esp_event_loop.h"
-#include "esp_log.h"
-#include "nvs_flash.h"
-#include "jsmn.h"
-#include <time.h>
-#include "lwip/apps/sntp.h"
-#include "driver/gpio.h"
-
 #include "main.h"
 
 int portion;
@@ -32,7 +17,6 @@ void misc_init(void)
 
 void main_task( void * pvParameters )
 {
-    configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
     TickType_t xLastWakeTime;
     const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
     xLastWakeTime = xTaskGetTickCount();  
@@ -43,6 +27,7 @@ void main_task( void * pvParameters )
         struct tm timeinfo = {0};
         time(&now);
         localtime_r(&now, &timeinfo);
+        ESP_LOGI("APP", "In main task");
         if (scheduled_time.tm_year == timeinfo.tm_year &&
             scheduled_time.tm_year == timeinfo.tm_year &&
             scheduled_time.tm_year == timeinfo.tm_year &&
@@ -70,11 +55,12 @@ void app_main()
     misc_init();
     iotc_init();
     motor_init();
-    pir_init();
+    //pir_init();
 
     /* Tasks */
     xTaskCreate(&mqtt_task, "mqtt_task", 8192, NULL, 5, NULL);
-    xTaskCreate(weight_task, "weight_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
-    vTaskStartScheduler();
+    xTaskCreate(&weight_task, "weight_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
+    xTaskCreate(&main_task, "main_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
+    //vTaskStartScheduler();
     // xTaskCreate(&lcd_task, "lcd_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
 }

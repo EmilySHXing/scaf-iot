@@ -32,12 +32,13 @@ void weight_task(void *pvParameters)
     }
 
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 600000 / portTICK_PERIOD_MS;
+    const TickType_t xFrequency = 15000 / portTICK_PERIOD_MS;
     xLastWakeTime = xTaskGetTickCount();  
 
     // read from device
     while (1)
     {
+        ESP_LOGI("APP", "In WEight Task");
         esp_err_t r = hx711_wait(&dev, 500);
         if (r != ESP_OK)
         {
