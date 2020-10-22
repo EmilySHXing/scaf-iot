@@ -29,7 +29,7 @@
 #define SUBSCRIBE_TOPIC_CONFIG "/devices/%s/config"
 #define PUBLISH_TOPIC_EVENT "/devices/%s/events"
 #define PUBLISH_TOPIC_STATE "/devices/%s/state"
-#define WEIGHT_MSG "{weight : %.2f, timestamp : %d%02d%02d%02d%02d}"
+#define WEIGHT_MSG "{\"weight\":%.2f, \"timestamp\":%d%02d%02d%02d%02d}"
 #define TEST_MSG "This is a test"
 
 void iotc_init();

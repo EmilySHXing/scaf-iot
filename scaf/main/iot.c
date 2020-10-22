@@ -130,6 +130,7 @@ void on_connection_state_changed(iotc_context_handle_t in_context_handle,
                        &iotc_mqttlogic_subscribe_callback, /*user_data=*/NULL);
 
         /* Create a timed task to publish every 600 seconds. */
+        publish_telemetry_event(iotc_context, 0, NULL);
         delayed_publish_task = iotc_schedule_timed_task(in_context_handle,
                                publish_telemetry_event, 600,
                                15, /*user_data=*/NULL);
