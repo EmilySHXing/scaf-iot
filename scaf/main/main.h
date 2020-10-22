@@ -3,6 +3,7 @@
 #include "weight.h"
 #include "globals.h"
 #include "pir.h"
+#include "lcd.h"
 #include <stdlib.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"

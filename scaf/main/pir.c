@@ -15,6 +15,7 @@ void pir_task( void * pvParameters )
     {
         ESP_LOGI("APP", "In PIR Task");
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
+            ESP_LOGI("APP", "ISR TRIGGERED");
             publish_telemetry_event(iotc_context, 0, NULL);
         }
     }

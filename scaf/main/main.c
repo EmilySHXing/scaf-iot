@@ -55,12 +55,15 @@ void app_main()
     misc_init();
     iotc_init();
     motor_init();
+    lcd_init();
     //pir_init();
 
     /* Tasks */
+    xTaskCreate(&lcd_task, "lcd_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
     xTaskCreate(&mqtt_task, "mqtt_task", 8192, NULL, 5, NULL);
     xTaskCreate(&weight_task, "weight_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
+    //xTaskCreate(&pir_task, "pir_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
     xTaskCreate(&main_task, "main_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
-    //vTaskStartScheduler();
-    // xTaskCreate(&lcd_task, "lcd_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
+    // vTaskStartScheduler();
+    
 }

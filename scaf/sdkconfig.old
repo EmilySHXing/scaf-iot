@@ -120,21 +120,20 @@ CONFIG_ESPTOOLPY_MONITOR_BAUD=115200
 # end of Serial flasher config
 
 #
-# Example Configuration
+# Wifi Configuration
 #
 CONFIG_ESP_WIFI_SSID="NetComm 2161-EXT"
 CONFIG_ESP_WIFI_PASSWORD="qudaceruqi"
-CONFIG_OUTPUT_GPIO=27
-# end of Example Configuration
+# end of Wifi Configuration
 
 #
 # Partition Table
 #
-CONFIG_PARTITION_TABLE_SINGLE_APP=y
+# CONFIG_PARTITION_TABLE_SINGLE_APP is not set
 # CONFIG_PARTITION_TABLE_TWO_OTA is not set
-# CONFIG_PARTITION_TABLE_CUSTOM is not set
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
-CONFIG_PARTITION_TABLE_FILENAME="partitions_singleapp.csv"
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_example.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions_example.csv"
 CONFIG_PARTITION_TABLE_OFFSET=0x8000
 CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
@@ -249,10 +248,10 @@ CONFIG_EFUSE_MAX_BLK_LEN=192
 #
 # Google IoT Core Configuration
 #
-CONFIG_GIOT_PROJECT_ID="project_id"
-CONFIG_GIOT_LOCATION="us-central1-a"
-CONFIG_GIOT_REGISTRY_ID="registry_id"
-CONFIG_GIOT_DEVICE_ID="device_id"
+CONFIG_GIOT_PROJECT_ID="scaf-291004"
+CONFIG_GIOT_LOCATION="us-central1"
+CONFIG_GIOT_REGISTRY_ID="esp-test"
+CONFIG_GIOT_DEVICE_ID="test-dev"
 # CONFIG_GIOT_DEBUG_OUTPUT is not set
 # end of Google IoT Core Configuration
 
