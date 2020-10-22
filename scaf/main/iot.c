@@ -34,12 +34,14 @@ void obtain_time(void)
     // SET TIMEZONE
     time_t now = 0;
     struct tm timeinfo = {0};
-    while (timeinfo.tm_year < (2016 - 1900)) {
+    while (timeinfo.tm_year < (2020 - 1900)) {
         ESP_LOGI(TAG, "Waiting for system time to be set...");
         vTaskDelay(2000 / portTICK_PERIOD_MS);
         time(&now);
         localtime_r(&now, &timeinfo);
     }
+    setenv("TZ", "GMT-4", 1);
+    tzset();
     ESP_LOGI(TAG, "Time is set...");
 }
 
@@ -57,7 +59,12 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     time(&now);
     localtime_r(&now, &timeinfo);
     char *publish_message = NULL;
-    asprintf(&publish_message, WEIGHT_MSG, weight, "");
+    asprintf(&publish_message, WEIGHT_MSG, weight, 
+                            timeinfo.tm_year + 1900, 
+                            timeinfo.tm_mon + 1, 
+                            timeinfo.tm_mday, 
+                            timeinfo.tm_hour, 
+                            timeinfo.tm_min);
     ESP_LOGI(TAG, "publishing msg \"%s\" to topic: \"%s\"\n", publish_message, publish_topic);
 
     iotc_publish(context_handle, publish_topic, publish_message,
@@ -94,6 +101,8 @@ void iotc_mqttlogic_subscribe_callback(
             &(scheduled_time.tm_hour),
             &(scheduled_time.tm_min),
             &(portion));
+            scheduled_time.tm_year -= 1900;
+            scheduled_time.tm_min -= 1;
         }
         free(sub_message);
     }
