@@ -22,14 +22,14 @@
 #include "ili9340.h"
 #include "globals.h"
 
-#define	INTERVAL		1000
+#define	INTERVAL		6000
 #define WAIT	vTaskDelay(INTERVAL)
 #define CONFIG_WIDTH  240
 #define CONFIG_HEIGHT 320
-#define CONFIG_CS_GPIO 14
+#define CONFIG_CS_GPIO 21
 #define CONFIG_DC_GPIO 27
-#define CONFIG_RESET_GPIO 33
-#define CONFIG_BL_GPIO 32
+#define CONFIG_RESET_GPIO 25
+#define CONFIG_BL_GPIO 26
 #define CONFIG_OFFSETX 0
 #define CONFIG_OFFSETY 0
 

@@ -89,27 +89,54 @@ void lcd_task(void * pvParameters) {
 	strcpy((char *)string, "Next Meal");
 	lcdDrawString(&dev, fx24G, 135, 120, string, DARK_BROWN);
 
+	ESP_LOGI(TAG, "In LCD Task");
+
+
+	// update time
+	time(&now);
+	localtime_r(&now, &timeinfo);
+	sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year+2019,
+						timeinfo.tm_mon+1,
+						timeinfo.tm_mday,
+						timeinfo.tm_hour,
+						timeinfo.tm_min);
+	printf("TIMESTAMP: %s\n", tm);
+	lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
+
+	// update weight
+	sprintf((char *)wgt, "%.1lfg", weight);
+	lcdDrawString(&dev, fx32G, 170, 260, wgt, WHITE);
+
+	//update next meal plan
+	sprintf((char *)next, "%02d:%02d", scheduled_time.tm_hour, scheduled_time.tm_min);
+	lcdDrawString(&dev, fx32G, 190, 105, next, BLACK);
+
+	WAIT;
+
 	while(1) {
         ESP_LOGI(TAG, "In LCD Task");
 
-
 		// update time
+        lcdDrawString(&dev, fx24G, 35, 295, tm, WHITE);
         time(&now);
         localtime_r(&now, &timeinfo);
-        sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year, 
-                            timeinfo.tm_mon, 
+        sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year+1900,
+                            timeinfo.tm_mon+1,
                             timeinfo.tm_mday, 
                             timeinfo.tm_hour, 
                             timeinfo.tm_min);
+        printf("TIMESTAMP: %s\n", tm);
         lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
 
 		// update weight
-		sprintf((char *)wgt, "%.1lf", weight);
-		lcdDrawString(&dev, fx32G, 170, 270, wgt, WHITE);
+        lcdDrawString(&dev, fx32G, 170, 260, wgt, LIGHT_BROWN);
+		sprintf((char *)wgt, "%.1lfg", weight);
+		lcdDrawString(&dev, fx32G, 170, 260, wgt, WHITE);
 
 		//update next meal plan
+		lcdDrawString(&dev, fx32G, 190, 105, next, WHITE);
 	    sprintf((char *)next, "%02d:%02d", scheduled_time.tm_hour, scheduled_time.tm_min);
-	    lcdDrawString(&dev, fx32G, 190, 100, next, BLACK);
+	    lcdDrawString(&dev, fx32G, 190, 105, next, BLACK);
 
 		WAIT;
 	} // end while
