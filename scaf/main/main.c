@@ -29,10 +29,10 @@ void main_task( void * pvParameters )
         localtime_r(&now, &timeinfo);
         ESP_LOGI("APP", "In main task");
         if (scheduled_time.tm_year == timeinfo.tm_year &&
-            scheduled_time.tm_year == timeinfo.tm_year &&
-            scheduled_time.tm_year == timeinfo.tm_year &&
-            scheduled_time.tm_year == timeinfo.tm_year &&
-            scheduled_time.tm_year == timeinfo.tm_year)
+            scheduled_time.tm_mon == timeinfo.tm_mon &&
+            scheduled_time.tm_mday == timeinfo.tm_mday &&
+            scheduled_time.tm_hour == timeinfo.tm_hour &&
+            scheduled_time.tm_min == timeinfo.tm_min)
         {
             rotate(portion);
         }

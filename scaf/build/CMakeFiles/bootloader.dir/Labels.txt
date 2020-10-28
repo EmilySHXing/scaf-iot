@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader
-/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader-complete.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader-complete.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule

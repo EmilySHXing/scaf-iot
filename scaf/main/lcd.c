@@ -62,6 +62,7 @@ void lcd_task(void * pvParameters) {
 
 	int width = CONFIG_WIDTH;  //240
 	int height = CONFIG_HEIGHT;  //320
+	double weight_prev;
 	uint16_t color;
 	lcdFillScreen(&dev, WHITE);
 	color = BLACK;
@@ -72,6 +73,10 @@ void lcd_task(void * pvParameters) {
     unsigned char wgt[40];
     unsigned char next[40];
     unsigned char tm[40];
+
+    unsigned char wgt_prev[40];
+    unsigned char next_prev[40];
+    unsigned char tm_prev[40];
 
     time_t now = 0;
     struct tm timeinfo = {0};
@@ -89,13 +94,13 @@ void lcd_task(void * pvParameters) {
 	strcpy((char *)string, "Next Meal");
 	lcdDrawString(&dev, fx24G, 135, 120, string, DARK_BROWN);
 
-	ESP_LOGI(TAG, "In LCD Task");
+	ESP_LOGI(TAG, "In LCD Task initial");
 
 
 	// update time
 	time(&now);
 	localtime_r(&now, &timeinfo);
-	sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year+2019,
+	sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year+1900,
 						timeinfo.tm_mon+1,
 						timeinfo.tm_mday,
 						timeinfo.tm_hour,
@@ -104,6 +109,8 @@ void lcd_task(void * pvParameters) {
 	lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
 
 	// update weight
+	if(weight<0) {weight = 0.0;}
+	weight_prev = weight;
 	sprintf((char *)wgt, "%.1lfg", weight);
 	lcdDrawString(&dev, fx32G, 170, 260, wgt, WHITE);
 
@@ -117,26 +124,39 @@ void lcd_task(void * pvParameters) {
         ESP_LOGI(TAG, "In LCD Task");
 
 		// update time
-        lcdDrawString(&dev, fx24G, 35, 295, tm, WHITE);
         time(&now);
         localtime_r(&now, &timeinfo);
+        strcpy((char *)tm_prev, (char *)tm);
         sprintf((char *)tm, TIMESTAMP, timeinfo.tm_year+1900,
                             timeinfo.tm_mon+1,
                             timeinfo.tm_mday, 
                             timeinfo.tm_hour, 
                             timeinfo.tm_min);
         printf("TIMESTAMP: %s\n", tm);
-        lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
+        if (strcmp((char *)tm_prev, (char *)tm) != 0){
+        	lcdDrawString(&dev, fx24G, 35, 295, tm_prev, WHITE);
+        	lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
+        }
+
 
 		// update weight
-        lcdDrawString(&dev, fx32G, 170, 260, wgt, LIGHT_BROWN);
-		sprintf((char *)wgt, "%.1lfg", weight);
-		lcdDrawString(&dev, fx32G, 170, 260, wgt, WHITE);
+        if(weight<0) {weight = 0.0;}
+        if (abs(weight_prev-weight) > 0.3){
+        	strcpy((char *)wgt_prev, (char *)wgt);
+        	sprintf((char *)wgt, "%.1lfg", weight);
+        	weight_prev = weight;
+			lcdDrawString(&dev, fx32G, 170, 260, wgt_prev, LIGHT_BROWN);
+			lcdDrawString(&dev, fx32G, 170, 260, wgt, WHITE);
+        }
+
 
 		//update next meal plan
-		lcdDrawString(&dev, fx32G, 190, 105, next, WHITE);
+		strcpy((char *)next_prev, (char *)next);
 	    sprintf((char *)next, "%02d:%02d", scheduled_time.tm_hour, scheduled_time.tm_min);
-	    lcdDrawString(&dev, fx32G, 190, 105, next, BLACK);
+	    if (strcmp((char *)next_prev, (char *)next) != 0){
+	    	lcdDrawString(&dev, fx32G, 190, 105, next_prev, WHITE);
+	    	lcdDrawString(&dev, fx32G, 190, 105, next, BLACK);
+	    }
 
 		WAIT;
 	} // end while

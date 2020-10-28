@@ -102,7 +102,7 @@ void iotc_mqttlogic_subscribe_callback(
             &(scheduled_time.tm_min),
             &(portion));
             scheduled_time.tm_year -= 1900;
-            scheduled_time.tm_min -= 1;
+            scheduled_time.tm_mon -= 1;
         }
         free(sub_message);
     }

@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "/Users/macbookpro/esp/esp-google-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "/Users/kaiwenyu/eclipse-workspace/scaf-iot/scaf/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		}
 	],
 	"target" : 

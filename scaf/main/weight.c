@@ -32,7 +32,7 @@ void weight_task(void *pvParameters)
     }
 
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 15000 / portTICK_PERIOD_MS;
+    const TickType_t xFrequency = 1000 / portTICK_PERIOD_MS;
     xLastWakeTime = xTaskGetTickCount();  
 
     // read from device

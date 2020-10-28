@@ -22,8 +22,8 @@
 #include "ili9340.h"
 #include "globals.h"
 
-#define	INTERVAL		6000
-#define WAIT	vTaskDelay(INTERVAL)
+#define	INTERVAL		2000
+#define WAIT	vTaskDelay(INTERVAL / portTICK_PERIOD_MS)
 #define CONFIG_WIDTH  240
 #define CONFIG_HEIGHT 320
 #define CONFIG_CS_GPIO 21
