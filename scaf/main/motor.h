@@ -10,7 +10,7 @@
 #define MOTOR_STEP 15
 #define MOTOR_DIR 14
 #define NUM_STEP 200
-#define RPM 1
+#define RPM 5
 #define PORTION_STEP 33
 
 void motor_init();

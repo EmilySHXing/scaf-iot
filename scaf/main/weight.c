@@ -17,7 +17,8 @@ void weight_task(void *pvParameters)
         if (r == ESP_OK)
         {
         	r = hx711_wait(&dev, 200);
-        	r = hx711_read_data(&dev, &offset);
+//        	r = hx711_read_data(&dev, &offset);
+        	offset = 85645;
         	printf("Offset: %d\n", offset);
             break;
         }

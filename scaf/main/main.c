@@ -34,6 +34,7 @@ void main_task( void * pvParameters )
             scheduled_time.tm_hour == timeinfo.tm_hour &&
             scheduled_time.tm_min == timeinfo.tm_min)
         {
+        	printf("Start rotating.");
             rotate(portion);
         }
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
