@@ -2,6 +2,10 @@
 
 void motor_init()
 {
+    gpio_pad_select_gpio(MOTOR_EN);
+    gpio_pad_select_gpio(MOTOR_DIR);
+    gpio_pad_select_gpio(MOTOR_STEP);
+
     gpio_set_direction(MOTOR_EN, GPIO_MODE_OUTPUT);
     gpio_set_direction(MOTOR_DIR, GPIO_MODE_OUTPUT);
     gpio_set_direction(MOTOR_STEP, GPIO_MODE_OUTPUT);
