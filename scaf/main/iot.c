@@ -38,10 +38,10 @@ void obtain_time(void)
         ESP_LOGI(TAG, "Waiting for system time to be set...");
         vTaskDelay(2000 / portTICK_PERIOD_MS);
         time(&now);
+        setenv("TZ", "EST+5", 1);
+        tzset();
         localtime_r(&now, &timeinfo);
     }
-    setenv("TZ", "GMT-4", 1);
-    tzset();
     ESP_LOGI(TAG, "Time is set...");
 }
 

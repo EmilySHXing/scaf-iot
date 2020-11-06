@@ -105,7 +105,7 @@ void lcd_task(void * pvParameters) {
 						timeinfo.tm_mday,
 						timeinfo.tm_hour,
 						timeinfo.tm_min);
-	printf("TIMESTAMP: %s\n", tm);
+	
 	lcdDrawString(&dev, fx24G, 35, 295, tm, BLACK);
 
 	// update weight
@@ -121,6 +121,7 @@ void lcd_task(void * pvParameters) {
 	WAIT;
 
 	while(1) {
+		ESP_LOGI(TAG,"TIMESTAMP: %s\n", tm);
         ESP_LOGI(TAG, "In LCD Task");
 
 		// update time
