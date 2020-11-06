@@ -7,6 +7,7 @@ const char *TAG = "APP";
 
 EventGroupHandle_t wifi_event_group;
 const int CONNECTED_BIT = BIT0;
+int init = 1;
 
 #define IOTC_UNUSED(x) (void)(x)
 
@@ -59,12 +60,22 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     time(&now);
     localtime_r(&now, &timeinfo);
     char *publish_message = NULL;
-    asprintf(&publish_message, WEIGHT_MSG, weight, 
+    if (init) {
+        asprintf(&publish_message, WEIGHT_MSG, (double) -123, 
                             timeinfo.tm_year + 1900, 
                             timeinfo.tm_mon + 1, 
                             timeinfo.tm_mday, 
                             timeinfo.tm_hour, 
                             timeinfo.tm_min);
+    }
+    else {
+        asprintf(&publish_message, WEIGHT_MSG, weight, 
+                            timeinfo.tm_year + 1900, 
+                            timeinfo.tm_mon + 1, 
+                            timeinfo.tm_mday, 
+                            timeinfo.tm_hour, 
+                            timeinfo.tm_min);
+    }
     ESP_LOGI(TAG, "publishing msg \"%s\" to topic: \"%s\"\n", publish_message, publish_topic);
 
     iotc_publish(context_handle, publish_topic, publish_message,
@@ -130,6 +141,8 @@ void on_connection_state_changed(iotc_context_handle_t in_context_handle,
                        &iotc_mqttlogic_subscribe_callback, /*user_data=*/NULL);
 
         /* Create a timed task to publish every 600 seconds. */
+        publish_telemetry_event(iotc_context, 0, NULL);
+        init = 0;
         publish_telemetry_event(iotc_context, 0, NULL);
         delayed_publish_task = iotc_schedule_timed_task(in_context_handle,
                                publish_telemetry_event, 600,

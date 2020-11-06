@@ -154,6 +154,7 @@ void lcd_task(void * pvParameters) {
 		//update next meal plan
 		strcpy((char *)next_prev, (char *)next);
 	    sprintf((char *)next, "%02d:%02d", scheduled_time.tm_hour, scheduled_time.tm_min);
+		ESP_LOGI(TAG, "%02d:%02d", scheduled_time.tm_hour, scheduled_time.tm_min);
 	    if (strcmp((char *)next_prev, (char *)next) != 0){
 	    	lcdDrawString(&dev, fx32G, 190, 105, next_prev, WHITE);
 	    	lcdDrawString(&dev, fx32G, 190, 105, next, BLACK);
