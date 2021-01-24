@@ -22,6 +22,7 @@ iotc_context_handle_t iotc_context = IOTC_INVALID_CONTEXT_HANDLE;
 
 void initialize_sntp(void)
 {
+    // Synchronize time
     ESP_LOGI(TAG, "Initializing SNTP");
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
     sntp_setservername(0, "time.google.com");
@@ -31,14 +32,14 @@ void initialize_sntp(void)
 void obtain_time(void)
 {
     initialize_sntp();
-    // wait for time to be set
-    // SET TIMEZONE
+    
     time_t now = 0;
     struct tm timeinfo = {0};
     while (timeinfo.tm_year < (2020 - 1900)) {
         ESP_LOGI(TAG, "Waiting for system time to be set...");
         vTaskDelay(2000 / portTICK_PERIOD_MS);
         time(&now);
+        // Set timezone
         setenv("TZ", "EST+5", 1);
         tzset();
         localtime_r(&now, &timeinfo);
@@ -52,15 +53,19 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     IOTC_UNUSED(timed_task);
     IOTC_UNUSED(user_data);
 
+    // Configure topic to publish to
     char *publish_topic = NULL;
     asprintf(&publish_topic, PUBLISH_TOPIC_EVENT, CONFIG_GIOT_DEVICE_ID);
 
+    // Get time
     time_t now = 0;
     struct tm timeinfo = {0};
     time(&now);
     localtime_r(&now, &timeinfo);
     char *publish_message = NULL;
+    
     if (init) {
+        // Display default weight
         asprintf(&publish_message, WEIGHT_MSG, (double) -123, 
                             timeinfo.tm_year + 1900, 
                             timeinfo.tm_mon + 1, 
@@ -78,6 +83,7 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     }
     ESP_LOGI(TAG, "publishing msg \"%s\" to topic: \"%s\"\n", publish_message, publish_topic);
 
+    // Publish message to topic
     iotc_publish(context_handle, publish_topic, publish_message,
                  iotc_example_qos,
                  /*callback=*/NULL, /*user_data=*/NULL);
@@ -94,6 +100,7 @@ void iotc_mqttlogic_subscribe_callback(
     IOTC_UNUSED(call_type);
     IOTC_UNUSED(state);
     IOTC_UNUSED(user_data);
+    
     if (params != NULL && params->message.topic != NULL) {
         ESP_LOGI(TAG, "Subscription Topic: %s\n", params->message.topic);
         char *sub_message = (char *)malloc(params->message.temporary_payload_data_length + 1);
@@ -104,6 +111,8 @@ void iotc_mqttlogic_subscribe_callback(
         memcpy(sub_message, params->message.temporary_payload_data, params->message.temporary_payload_data_length);
         sub_message[params->message.temporary_payload_data_length] = '\0';
         ESP_LOGI(TAG, "Message Payload: %s \n", sub_message);
+        
+        // Parse command
         if (params->message.temporary_payload_data_length > 10) {
             sscanf(sub_message, "%d|%d|%d|%d|%d|%d", 
             &(scheduled_time.tm_year),
@@ -227,6 +236,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event)
 
 void wifi_init(void)
 {
+    // Connect to wifi with pre-configured SSID and password
     tcpip_adapter_init();
     wifi_event_group = xEventGroupCreate();
     ESP_ERROR_CHECK(esp_event_loop_init(wifi_event_handler, NULL));
