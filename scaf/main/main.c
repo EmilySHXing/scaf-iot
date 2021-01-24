@@ -6,6 +6,7 @@ double weight;
 
 void misc_init(void)
 {
+    /* Global variables initializations */
     portion = 0;
     scheduled_time.tm_year = 0;
     scheduled_time.tm_mon = 0;
@@ -17,17 +18,23 @@ void misc_init(void)
 
 void main_task( void * pvParameters )
 {
+    /* Main task for time handling */
+    
+    // Set frequency to 60s to update time every minute
     TickType_t xLastWakeTime;
     const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
     xLastWakeTime = xTaskGetTickCount();  
 
     for( ;; )
     {
+        // Get time
         time_t now = 0;
         struct tm timeinfo = {0};
         time(&now);
         localtime_r(&now, &timeinfo);
         ESP_LOGI("APP", "In main task");
+        
+        // Rotate motor if time is right
         if (scheduled_time.tm_year == timeinfo.tm_year &&
             scheduled_time.tm_mon == timeinfo.tm_mon &&
             scheduled_time.tm_mday == timeinfo.tm_mday &&
@@ -37,6 +44,8 @@ void main_task( void * pvParameters )
         	printf("Start rotating.");
             rotate(portion);
         }
+        
+        // Wait 60s
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
 }
@@ -65,6 +74,5 @@ void app_main()
     xTaskCreate(&weight_task, "weight_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
     xTaskCreate(&pir_task, "pir_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
     xTaskCreate(&main_task, "main_task", configMINIMAL_STACK_SIZE * 5, NULL, 5, NULL);
-    // vTaskStartScheduler();
     
 }
